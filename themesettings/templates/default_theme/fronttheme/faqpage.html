@@ -1,0 +1,58 @@
+{% extends 'default_theme/hbdtheme/__landingbase.html' %}
+{% load staticfiles %} 
+{% block Style_sheets %}
+
+{% endblock Style_sheets %}
+{% load widget_tweaks %}
+{% load form_custom %}
+
+{% block Content_Area %}
+
+<div class="middle-section">
+            <div class="Terms-&-Condition pt-md-5 pb-md-5 cms-section">
+                <div class="container">
+                   <div class="row" id="faqshow">
+            <div class="col-lg-10 mx-auto">
+              <div class="text-center mb-5">
+                {{faq.content|safe}}
+              </div>
+              <div class="row"> 
+                {% if faq_qs %}
+                {% for item in faq_qs %}
+                <div class="col-sm-12 col-md-12 col-lg-6">
+                  <div class="faq-box wt-bg-inn aos-init aos-animate" data-aos="flip-down">
+                    <div id="accordion">
+                     
+                        <div class="card">
+                            <div class="card-header" id="headingOne_{{item.id}}">
+                              <h5 class="font-secondary clearfix collapsed" data-toggle="collapse" data-target="#faq_{{item.id}}" aria-expanded="false" aria-controls="collapseOne">{{item.title}} <i class="fa float-right" aria-hidden="true"></i></h5>
+                            </div>
+                            <div id="faq_{{item.id}}" class="collapse" aria-labelledby="headingOne_{{item.id}}" data-parent="#accordion" style="">
+                              <div class="card-body">
+                               <p>{{item.content}}</p>
+                             </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                 <h6 > No Frequenty Asked Questions Found </h6>
+                {% endif %}
+              </div>
+            </div>
+           </div>
+                </div>
+            </div>
+            {% block Footer %}
+            {% include  "default_theme/hbdtheme/__footer.html" %}
+            {% endblock Footer %}
+</div>
+
+{% endblock Content_Area %}
+
+
+{% block Java_Scripts %}
+
+{% endblock %}

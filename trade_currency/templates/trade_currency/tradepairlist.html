@@ -1,0 +1,128 @@
+{% extends 'default_theme/base/__base.html' %}
+{% load staticfiles %} 
+
+{% load form_custom %}
+
+{% block Style_sheets %}
+
+
+{% endblock Style_sheets %}
+
+ {% load render_table from django_tables2 %}
+ {% load django_tables2 crispy_forms_tags %}
+ {% block Content_Area %}
+  
+    <section class="content">
+     
+     
+   	 <div class="box box-default">
+        <div class="box-header with-border">
+          <h3 class="box-title">{{ Title}}</h3>
+
+          <div class="box-tools pull-right">
+           
+          </div>
+        </div>
+     {% if messages %}
+     {% for message in messages %}
+     <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+   
+   
+     <div class="box">
+            <div class="box-header">
+              <h3 class="box-title"></h3>
+              <div class="box-tools pull-right">                         
+                        </div>
+            </div>
+            <div class="table-responsive">
+
+           
+            <div class="box-body">
+              <table id="example2" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>S.No</th>
+                  <th>Pair Name</th>
+                  <th>Last Price</th>
+                  <th> Status</th>
+                  <th>Actions</th>
+                </tr>
+                </thead>
+               
+                <tbody  id ='marketprice_rowdata_id'>
+
+
+                 {% if content_qs %}
+                 {% for item in content_qs %}
+                 <tr>
+                  <td>{{ forloop.counter}}</td>
+                  <td>{{ item.pair_name}}</td>
+                  <td>{{ item.last_price|floatformat:-2}}</td>
+                  <td>{{ item.get_status_display}}</td>
+                  <td> 
+                    <a href="{% url 'trade_currency:edit_tradepair' item.id %}" title="Edit" class="btn"><i class="fa fa-edit"></i></a>
+                  </td>
+                </tr>
+                 {% endfor %}
+                {% else %}
+                     <tr><td colspan=4><h5>There are no records yet</h5></td></tr>
+                {% endif %}
+              </tbody>
+               </table>
+            </div>
+            </div>
+           
+          </div>
+        
+      </div>
+
+    </section>
+  
+
+ {% endblock Content_Area %}
+
+ {% block Java_Scripts %}
+ <script type="text/javascript" src="{% static 'django_ajax/js/jquery.ajax.min.js' %}"></script>
+<script>
+   function fetchdata(){
+
+    $.ajax({
+    url: '/tradecurrency/getmarketprice_ajax/',
+    csrfmiddlewaretoken: "{{ csrf_token }}",
+    headers: {
+            'Accept': 'application/json',
+           'Content-Type': 'application/json'
+           },
+    type: 'post',
+    success: function(content){
+    var json_obj = JSON.parse(content.content);
+    
+    $("#marketprice_rowdata_id").empty();
+    for (var i = 0; i < json_obj.marketdatalist.length; i++) {
+      $('#marketprice_rowdata_id').append("<tr><td>"+ json_obj.marketdatalist[i].count+"</td><td>"+json_obj.marketdatalist[i].pairname+"</td><td>"+json_obj.marketdatalist[i].marketprice+"</td><td>"+json_obj.marketdatalist[i].status+"</td><td><a href='/tradecurrency/edit_tradepair/"+json_obj.marketdatalist[i].price_id+"/'><i class='fa fa-edit'></i></a></td></tr>");
+
+     }
+    
+    },
+    complete:function(content){
+     
+    setTimeout(fetchdata,5000);
+    }
+    });
+
+}
+
+$(document).ready(function(){
+  fetchdata();
+});
+</script>
+ {% endblock %}
+
+

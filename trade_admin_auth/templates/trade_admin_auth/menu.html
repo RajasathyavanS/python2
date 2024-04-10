@@ -1,0 +1,139 @@
+{% if request.user.admin_user_profile.role == 0  or menu_permissions_context_manage_user == 0 %}
+<li>
+  <a href="#">
+    <i class="fa fa-file"></i> <span>Rate Master</span>
+    <span class="pull-right-container">
+      <!-- <i class="fa fa-angle-left pull-right"></i> -->
+    </span>
+ 
+  </a>
+
+</li>
+{% endif %}
+{% if request.user.admin_user_profile.role == 0  %}
+<li class="{% if activecls == 'subdetailadmin'%} active {% endif %}treeview">
+          <a href="#">
+            <i class="fa fa-user"></i> <span>Manage Sub Admin</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{% url 'trade_admin_auth:subadminlist' %}"><i class="fa fa-circle-o"></i> View Subadmin</a></li>
+          </ul>
+        </li>
+{% endif%}
+
+{% if request.user.admin_user_profile.role == 0 or menu_permissions_context_frontpage == 0 %}
+<li class="{% if activecls == 'useraddressadmin'%} active {% endif %} treeview">
+          <a href="#">
+            <i class="fa fa-users"></i> <span>Master</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            {% if request.user.admin_user_profile.role == 0 or sub_menu_permissions_context_userlist == 0 %}
+            <li><a href="#"><i class="fa fa-users"></i> User Master</a></li>
+            {% endif%}
+            {% if request.user.admin_user_profile.role == 0 or sub_menu_permissions_context_adduser == 0 %}
+            <li><a href="{% url 'trade_admin_auth:scheme_master' %}"><i class="fa fa-users"></i> Scheme Master</a></li>
+            {% endif%}
+            {% if request.user.admin_user_profile.role == 0 or sub_menu_permissions_context_walletaddress == 0 %}
+            <li><a href="{% url 'trade_admin_auth:amout_mast' %}"><i class="fa fa-users"></i> Scheme Amount Master</a></li>
+            {% endif%}
+            {% if request.user.admin_user_profile.role == 0 or sub_menu_permissions_context_ticket_category == 0 %}
+            <li><a href="#"><i class="fa fa-users"></i> Company Masters</a></li>
+            {% endif%}
+
+            
+            
+          </ul>
+        </li>
+{% endif%}
+
+{% if request.user.admin_user_profile.role == 0 or menu_permissions_context_transaction == 0 %}
+
+        <li>
+          <a href="{% url 'trade_admin_auth:gold_mast' %}">
+            <i class="fa fa-file"></i> <span>Gold Master</span>
+            <span class="pull-right-container">
+              <!-- <i class="fa fa-angle-left pull-right"></i> -->
+            </span>
+         
+          </a>
+        
+        </li>
+{% endif%}
+
+{% if request.user.admin_user_profile.role == 0 or menu_permissions_context_plan == 0 %}
+        <li>
+          <a href="#">
+            <i class="fa fa-question-circle"></i> <span>Admin User Master</span>
+            <span class="pull-right-container">
+              <!-- <i class="fa fa-angle-left pull-right"></i> -->
+            </span>
+         
+          </a>
+        
+        </li>
+{% endif%}
+
+{% if request.user.admin_user_profile.role == 0 or menu_permissions_context_referral == 0 %}
+        <li class="{% if activecls == 'useraddressadmin'%} active {% endif %} treeview">
+          <a href="#">
+            <i class="fa fa-users"></i> <span>Reports </span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            {% if request.user.admin_user_profile.role == 0 or sub_menu_permissions_context_ticket_request == 0 %}
+            <li><a href="#"><i class="fa fa-users"></i> Customer Ledger</a></li>
+            {% endif%}
+            {% if request.user.admin_user_profile.role == 0 or sub_menu_permissions_ticket_request == 0 %}
+            <li><a href="#"><i class="fa fa-users"></i> Scheme Wise Report</a></li>
+            {% endif%}
+            {% if request.user.admin_user_profile.role == 0 or sub_menu_permissions_context_request == 0 %}
+            <li><a href="#"><i class="fa fa-users"></i> Rate Wise Report</a></li>
+            {% endif%}
+
+            
+            
+          </ul>
+        </li>
+        {% endif%}
+
+{% comment %}
+<li class="{% if activecls == 'userdetailadmin'%} active {% endif %} treeview">
+          <a href="#">
+            <i class="fa fa-users"></i> <span>Manage User</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{% url 'trade_admin_auth:tradeuserlist' %}"><i class="fa fa-circle-o"></i> User List</a></li>
+            <li><a href="{% url 'trade_admin_auth:deactivateuserlist' %}"><i class="fa fa-circle-o"></i> Deactivate User List</a></li>
+         
+           <li><a href="{% url 'trade_admin_auth:balanceuserlist' %}"><i class="fa fa-circle-o"></i> User Balance List</a></li>
+            <li><a href="{% url 'trade_admin_auth:twofalist' %}"><i class="fa fa-circle-o"></i> TwoFA List</a></li>
+            <li><a href="{% url 'trade_admin_auth:activityuserlist' %}"><i class="fa fa-circle-o"></i> User Activity List</a></li>
+          </ul>
+        </li>
+
+<li class="{% if activecls == 'transaction'%} active {% endif %} treeview">
+          <a href="#">
+            <i class="fa fa-money"></i> <span>Transaction</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{% url 'trade_admin_auth:depositlist' %}"><i class="fa fa-circle-o"></i>Deposit History</a></li>
+            <li><a href="{% url 'trade_admin_auth:withdrawlist' %}"><i class="fa fa-circle-o"></i>Withdraw History</a></li>
+         
+          </ul>
+        </li>
+
+{% endcomment %}

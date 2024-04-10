@@ -1,0 +1,35 @@
+  {% load staticfiles %}
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    
+    <section class="sidebar">
+    
+      <ul class="sidebar-menu" data-widget="tree">
+        <li class="header">MENU</li>
+
+        <li>
+          <a href="{% url 'trade_admin_auth:dashboard' %}">
+            <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+          </a>
+        </li>
+     
+        {% include 'trade_admin_auth/menu.html'%}
+        
+        {% include 'trade_currency/menu.html'%}
+        
+        {% include 'trade_master/menu.html'%}
+
+      
+    
+        <li>
+          <a href="{% url 'trade_admin_auth:attemptiplist' %}">
+            <i class="fa fa-ban"></i> <span>Attempt IP Address</span>
+          </a>
+        </li>
+        
+      </ul>
+    </section>
+    
+    <!-- /.sidebar -->
+  </aside>

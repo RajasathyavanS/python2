@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{{comp_profile_name}} - {{Title}}</title>
+  <meta charset="utf-8">
+  {% load static %}
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'front_design/css/bootstrap.min.css' %}" type="text/css">
+  <link href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css" type="text/css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'front_design/css/animate.css' %}">
+  <link rel="stylesheet" href="{% static 'front_design/css/aos.css' %}">
+  <link rel="stylesheet" href="{% static 'front_design/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'front_design/css/responsive.css' %}">
+  <link rel="stylesheet" href="{% static 'front_design/lobibox/css/lobibox.min.css' %}">
+</head>
+<body>
+  <div class="main-container home-page-main">
+        <div >
+            {% block Header %}
+            {% include  "default_theme/hbdtheme/__profileheader.html" %}
+            {% endblock Header %}
+        </div>
+       {% block Content_Area %}
+
+       {% endblock Content_Area %}
+  </div>
+{% include  "default_theme/hbdtheme/__Modal.html" %}
+</html>
+
+<script src="{% static 'front_design/js/jquery.min.js' %}"></script>
+<script src="{% static 'front_design/js/popper.min.js' %}"></script>
+<script src="{% static 'front_design/js/bootstrap.min.js' %}"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script src="{% static 'front_design/js/aos.js' %}"></script>
+<script src="{% static 'front_design/js/main.js' %}"></script>
+<script src="{% static 'front_design/js/smoothscroll.js' %}"></script>
+
+<script src="{% static 'front_design/js/web3.min.js'%}"></script>
+<script type="text/javascript" src="https://unpkg.com/@walletconnect/web3-provider@1.2.1/dist/umd/index.min.js"></script>
+<script type="text/javascript" src="{% static 'django_ajax/js/jquery.ajax.min.js' %}"></script>
+<script src="{% static 'front_design/js/djQ4R2.js' %}"></script>
+<script src="{% static 'front_design/lobibox/js/lobibox.min.js' %}"></script>
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="crossorigin="anonymous"></script>
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+google.charts.load('current',  {'packages':['bar']});
+
+$.each($('.liveauctionchartcls'), function(index, value) {
+  index++;
+  google.charts.setOnLoadCallback(drawliveauctions);
+  function drawliveauctions() {
+    var data = new google.visualization.DataTable();
+    data.addColumn('timeofday', 'Time of Day');
+    data.addColumn('number', 'Cent');
+    data.addColumn('number', 'HBD Token');
+    var liveauctiondata = [];
+    liveauctiondata = $('#liveauctionchartname_'+index).val();
+    var liveauctiondataarray = []
+    liveauctiondataarray = JSON.parse(liveauctiondata)
+    data.addRows(liveauctiondataarray)
+    var options = {
+        lineWidth:3,
+        hAxis: {
+        title: 'Time',
+        gridlines: {
+          }
+        },
+        vAxis:{
+        title: 'Amount',
+        gridlines: {
+        }
+        },
+        backgroundColor: '#FFFFFF'
+      };
+     var chart = new google.charts.Bar(document.getElementById('chart_div_'+index));
+     chart.draw(data, google.charts.Bar.convertOptions(options));
+
+    }
+});
+$.each($('.upcomingauctionchartcls'), function(index, value) {
+  index++;
+  google.charts.setOnLoadCallback(drawupcomingauctions);
+  function drawupcomingauctions() {
+      var data = new google.visualization.DataTable();
+      data.addColumn('timeofday', 'Time of Day');
+      data.addColumn('number', 'Cent');
+      data.addColumn('number', 'HBD Token');
+      var upcomingauctiondata = [];
+      upcomingauctiondata = $('#upcomingauctionchartname_'+index).val();
+      var upcomingauctiondataarray = []
+      upcomingauctiondataarray = JSON.parse(upcomingauctiondata)
+      data.addRows(upcomingauctiondataarray)
+      var options = {
+        lineWidth:3,
+        hAxis: {
+        title: 'Time',
+        gridlines: {
+          }
+        },
+        vAxis:{
+        title: 'Amount',
+        gridlines: {
+        }
+        },
+        backgroundColor: '#FFFFFF'
+      };
+      var chart = new google.charts.Bar(document.getElementById('chart_upcoming_div_'+index));
+      chart.draw(data, google.charts.Bar.convertOptions(options));
+    }
+
+});
+$.each($('.closedauctionchartcls'), function(index, value) {
+  index++;
+  google.charts.setOnLoadCallback(drawclosedauctions);
+  function drawclosedauctions() {
+      var data = new google.visualization.DataTable();
+      data.addColumn('timeofday', 'Time of Day');
+      data.addColumn('number', 'Cent');
+      data.addColumn('number', 'HBD Token');
+      var upcomingauctiondata = [];
+      closedauctiondata = $('#closedauctionchartname_'+index).val();
+      var closedauctiondataarray = []
+      closedauctiondataarray = JSON.parse(closedauctiondata);
+      data.addRows(closedauctiondataarray);
+      var options = {
+        lineWidth:3,
+        hAxis: {
+        title: 'Time',
+        gridlines: {
+          }
+        },
+        vAxis:{
+        title: 'Amount',
+        gridlines: {
+        }
+        },
+        backgroundColor: '#FFFFFF'
+      };
+    var chart = new google.charts.Bar(document.getElementById('chart_closed_div_'+index));
+    chart.draw(data, google.charts.Bar.convertOptions(options));
+    }
+
+});
+</script>
+
+
+
+
+<script>
+
+  $(".circle_percent").each(function() {
+    var $this = $(this),
+    $dataV = $this.data("percent"),
+    $dataDeg = $dataV * 3.6,
+    $round = $this.find(".round_per");
+    $round.css("transform", "rotate(" + parseInt($dataDeg + 180) + "deg)"); 
+    if($dataV >= 51){
+      $round.css("transform", "rotate(" + 360 + "deg)");
+      setTimeout(function(){
+        $this.addClass("percent_more");
+      },1000);
+      setTimeout(function(){
+        $round.css("transform", "rotate(" + parseInt($dataDeg + 180) + "deg)");
+      },1000);
+    } 
+  });
+
+{% if messages %}
+ var type = '';
+ var message ='';
+
+ {% for message in messages %} 
+ type ='{{ message.tags }}';
+ message = '{{ message}}';
+ {% endfor %}
+
+
+ if (type =='alert-success'){
+ 
+ var success_text = message;
+ Lobibox.notify('success', {
+ title:'Success',
+ continueDelayOnInactiveTab: false,
+ pauseDelayOnHover: true,
+ sound: false,
+ position: 'right top',
+ msg: success_text
+ });
+ }
+ else {
+ var error_text = message
+ Lobibox.notify('warning', {
+ title:'Error',
+ continueDelayOnInactiveTab: false,
+ pauseDelayOnHover: true,
+ sound: false,
+ position: 'right top',
+ msg: error_text
+ });
+
+ }
+
+ {% endif %}
+
+</script>
+  <script>
+    document.addEventListener('readystatechange', event => {
+      if (event.target.readyState === "complete") {
+        var clockdiv = document.getElementsByClassName("clockdiv");
+        var countDownDate = new Array();
+        for (var i = 0; i < clockdiv.length; i++) {
+          countDownDate[i] = new Array();
+          countDownDate[i]['el'] = clockdiv[i];
+          countDownDate[i]['time'] = new Date(clockdiv[i].getAttribute('data-date')).getTime();
+          countDownDate[i]['days'] = 0;
+          countDownDate[i]['hours'] = 0;
+          countDownDate[i]['seconds'] = 0;
+          countDownDate[i]['minutes'] = 0;
+        }
+
+        var countdownfunction = setInterval(function() {
+          for (var i = 0; i < countDownDate.length; i++) {
+            var now = new Date().getTime();
+            var distance = countDownDate[i]['time'] - now;
+            countDownDate[i]['days'] = Math.floor(distance / (1000 * 60 * 60 * 24));
+            countDownDate[i]['hours'] = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            countDownDate[i]['minutes'] = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            countDownDate[i]['seconds'] = Math.floor((distance % (1000 * 60)) / 1000);
+
+            if (distance < 0) {
+              countDownDate[i]['el'].querySelector('.days').innerHTML = 0;
+              countDownDate[i]['el'].querySelector('.hours').innerHTML = 0;
+              countDownDate[i]['el'].querySelector('.minutes').innerHTML = 0;
+              countDownDate[i]['el'].querySelector('.seconds').innerHTML = 0;
+            }else{
+              countDownDate[i]['el'].querySelector('.days').innerHTML = countDownDate[i]['days'];
+              countDownDate[i]['el'].querySelector('.hours').innerHTML = countDownDate[i]['hours'];
+              countDownDate[i]['el'].querySelector('.minutes').innerHTML = countDownDate[i]['minutes'];
+              countDownDate[i]['el'].querySelector('.seconds').innerHTML = countDownDate[i]['seconds'];
+            }
+
+          }
+        }, 1000);
+      }
+    });
+
+ 
+    function bidajax(id){
+    get_id = id
+     var bidid = $("#bid_id").val();
+     $.ajax({
+        url: "/auctions/ajaxbidfunc/",
+        data : {'id':bidid},
+        dataType : 'json',
+        headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+        },
+        success: function(content){
+        
+          $("#bids_list_"+get_id).empty() 
+
+          for (var i = 0; i < content.bid_list.length; i++) {
+        
+            var amt = parseFloat(content.bid_list[i].amount)
+            var bidamt = amt.toFixed(8)
+
+            $('#bids_list_'+get_id).append('<li><a>'+ bidamt +' B . HBD</a></li>');
+          }
+         
+        },
+        error: function(response){
+          
+        }
+    });
+ }
+
+function bidajax1(id){
+    get_id = id
+    var bidid = $("#bidclosed_id").val();
+     $.ajax({
+        url: "/auctions/ajaxbidfunc/",
+        data : {'id':bidid},
+        dataType : 'json',
+        headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+        },
+        success: function(content){
+        
+          $("#bids_list_"+get_id).empty() 
+
+          for (var i = 0; i < content.bid_list.length; i++) {
+        
+            var amt = parseFloat(content.bid_list[i].amount)
+            var bidamt = amt.toFixed(8)
+
+            $('#bids_list_'+get_id).append('<li><a>'+ bidamt +' B . HBD</a></li>');
+          }
+         
+        },
+        error: function(response){
+          
+        }
+    });
+ }
+
+
+ function notifychangestatus(id){
+    var auctionid = $("#auction_id").val()
+    get_id = id
+     $.ajax({
+        url: "/auctions/notificationupdate/",
+        data : {'id':id},
+        dataType : 'json',
+        headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+        },
+        success: function(content){
+          var status = content.status
+
+          if (status == 'True') {
+            window.location.href = '/auctions/winningpage/'+auctionid+'/'
+          }
+          else if (status == 'False'){
+            window.location.href = '/auctions/losingpage/'+auctionid+'/'
+          }
+         
+        },
+        error: function(response){
+        }
+    });
+ }
+
+
+
+  </script>
+
+<script>
+ $(document).on("contextmenu", function (e) { 
+ e.preventDefault();
+ });
+ $(document).keydown(function (event) {
+ if (event.keyCode == 123) 
+ { 
+ return false;
+ } 
+ else if(event.ctrlKey && event.shiftKey && event.keyCode == 73)
+ { 
+ return false;
+ }
+ });
+ </script>
+
+{% block Java_Scripts %}
+{% endblock %}

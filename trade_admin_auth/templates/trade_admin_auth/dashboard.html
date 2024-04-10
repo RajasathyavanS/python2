@@ -1,0 +1,130 @@
+{% extends 'default_theme/base/__base.html' %}
+{% load staticfiles %} 
+{% block Style_sheets %}
+{% endblock Style_sheets %}
+{% load widget_tweaks %}
+
+ {% load django_tables2 crispy_forms_tags %}
+ {% load render_table from django_tables2 %}
+ {% block Content_Area %}
+
+ {% if messages %}
+      {% for message in messages %}
+    <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+
+  <section class="content">
+      
+     
+     <div class="box box-default">
+        <div class="box-header with-border">
+          <h3 class="box-title">Dashboard</h3>
+          <br>
+          <br>
+    <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-aqua"><i class="fa fa-users"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text"> Gold rate</span>
+              <span class="info-box-number">
+              <a href="/tradeadmin/List_User_Management/" title='Click here to Users list' target="_blank">  
+              {{auction_count}}
+              </a>
+            </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-green"><i class="fa fa-users"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Active Users</span>
+              <span class="info-box-number">
+              <a href="/tradeadmin/user_list_management/activeuser/" title='Click here to Active Users List' target="_blank">  
+              {{auction_count}}
+              </a>
+            </span>
+            </div>
+          </div>
+        </div>
+        </div>
+
+
+
+
+
+
+
+  
+    
+{% if request.user.admin_user_profile.role == 0 %}
+    <div class="row">
+     
+    
+     <div class="col-md-12" style = "min-height:500px;"> 
+     <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Admin Log Activity</h3>
+              <div class="box-tools pull-right">                         
+              </div>
+            </div>
+             <div class="table-responsive hide-scroll">
+           
+            <div class="box-body">
+
+            <table id="example2" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>S.No</th>
+                  <th>Username</th>
+                  <th>IP Address</th>
+                  <th>Activity</th>
+                  <th>Log Date</th>
+                </tr>
+                </thead>
+               
+                <tbody>
+                 {% if adminactivity_qs %}
+                 {% for item in adminactivity_qs %}
+                 <tr>
+                  <td>{{ forloop.counter}}</td>
+                  <td>{{ item.user}}</td>
+                  <td>{{ item.ip_address}}</td>
+                  <td>{{ item.activity}}</td>
+                  <td>{{ item.created_on}}</td>
+                </tr>
+                 {% endfor %}
+                {% else %}
+                     <tr><td colspan=6><h5>There are no records yet</h5></td></tr>
+                {% endif %}
+              </tbody>
+               </table>
+
+            </div>
+            </div>
+      </div>
+     </div>
+
+    </div> 
+{% else %}
+<div class="text-left">
+<h2>Welcome to dashboard !</h2></div>
+{% endif %}
+    </section>
+
+ {% endblock Content_Area %}
+
+ {% block Java_Scripts %}
+
+ {% endblock %}
+
+

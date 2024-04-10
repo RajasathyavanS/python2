@@ -1,0 +1,37 @@
+{% extends 'default_theme/hbdtheme/__landingbase.html' %}
+{% load staticfiles %} 
+{% block Style_sheets %}
+
+{% endblock Style_sheets %}
+{% load widget_tweaks %}
+{% load form_custom %}
+
+{% block Content_Area %}
+
+<div class="middle-section">
+            <div class="Terms-&-Condition  pb-md-5 cms-section">
+                <div class="container">
+                    <div class="Terms-Condition-content">
+                    <div class="Terms-Condition-heading ">
+                        <h2>Terms & Condition</h2>
+                    </div>
+                    <div class="Terms-Condition-sub-heading pt-md-5 pb-4">
+                        {{terms.content|safe}}
+
+                    </div>
+                </div>
+                </div>
+
+            </div>
+            
+            {% block Footer %}
+            {% include  "default_theme/hbdtheme/__footer.html" %}
+            {% endblock Footer %}
+        </div>
+
+{% endblock Content_Area %}
+
+
+{% block Java_Scripts %}
+
+{% endblock %}

@@ -1,0 +1,139 @@
+{% extends 'default_theme/base/__base.html' %}
+{% load staticfiles %} 
+
+{% load form_custom %}
+
+
+{% block Style_sheets %}
+{{ subadmin_formset.media.css }}
+{% endblock Style_sheets %}
+{% load widget_tweaks %}
+
+ {% block Content_Area %}
+    <!-- Main content -->
+    <section class="content">
+      <!-- Small boxes (Stat box) -->
+     
+   	 <div class="box box-default">
+        <div class="box-header with-border">
+          <h3 class="box-title">{{ Title}}</h3>
+
+          <div class="box-tools pull-right">
+            {% comment %}
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+            {% endcomment %}
+          </div>
+        </div>
+        {% if messages %}
+     {% for message in messages %}
+     <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+         <!-- form start -->
+         <form role="form" action="" method='post' enctype="multipart/form-data" novalidate ="novalidate">
+             {% csrf_token %} 
+             {{ form.media }}
+        <!-- /.box-header -->
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-6">
+              
+              <!-- /.form-group -->
+               <div class="form-group">
+                  <label >{{form.username.label}}
+                    
+                  </label>
+                    {%render_field form.username class+="form-control" placeholder=form.username.label %}
+                    {% if form.username.errors %}
+                    {% for error in form.username.errors %}
+                     <span class="text-danger">* {{ error|escape }} </span>
+                    {% endfor %}
+                  {% endif %}
+                   
+                </div>
+                  <div class="form-group">
+                  <label >{{form.email.label}}
+                    
+                  </label>
+                    {%render_field form.email class+="form-control" placeholder=form.email.label %}
+                    {% if form.email.errors %}
+                    {% for error in form.email.errors %}
+                     <span class="text-danger">* {{ error|escape }} </span>
+                    {% endfor %}
+                  {% endif %}
+                   
+                </div>
+                <div class="form-group">
+                  <label >{{form.password1.label}}
+                 
+                  </label>
+                    {%render_field form.password1 class+="form-control" placeholder=form.password1.label %}
+                    {% if form.password1.errors %}
+                    {% for error in form.password1.errors %}
+                     <span class="text-danger">* {{ error|escape }} </span>
+                    {% endfor %}
+                  {% endif %}
+                   
+                </div>
+                   <div class="form-group">
+                  <label >{{form.password2.label}}
+                   
+                  </label>
+                    {%render_field form.password2 class+="form-control" placeholder=form.password2.label %}
+                    {% if form.password2.errors %}
+                    {% for error in form.password2.errors %}
+                     <span class="text-danger">* {{ error|escape }} </span>
+                    {% endfor %}
+                  {% endif %}
+                   
+                </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-6">
+
+             
+              {{ subadmin_formset.management_form }} 
+
+              {% for subadmin_formset_detail  in subadmin_formset %}
+                {{ forloop.counter }}
+
+                {{ subadmin_formset_detail.menu_content.value }}
+                {% render_field subadmin_formset_detail.access_modules  class+="form-control access_modules"  %}
+                {% render_field subadmin_formset_detail.access_permissions  class+="form-control access_permissions"  %}
+
+              {% endfor %}
+              
+              
+              
+            <!-- /.col -->
+            </div>
+          </div>
+           <!-- /.second row -->
+        <!-- /.box-body -->
+         <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                
+         </div>
+          </form>
+      </div>
+
+    </section>
+    <!-- /.content -->
+
+
+
+
+ {% endblock Content_Area %}
+
+ {% block Java_Scripts %}
+
+ {% endblock %}
+
+

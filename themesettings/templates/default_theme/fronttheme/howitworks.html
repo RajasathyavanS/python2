@@ -1,0 +1,54 @@
+{% extends 'default_theme/hbdtheme/__landingbase.html' %}
+{% load staticfiles %} 
+{% block Style_sheets %}
+
+{% endblock Style_sheets %}
+{% load widget_tweaks %}
+{% load form_custom %}
+
+{% block Content_Area %}
+
+<div class="Hit-w-001">
+        <div class="container" id="howitwork">
+          <div class="row">
+            <div class="col-md-11 mx-auto">
+              <div class="Hit-H text-center">
+                <p class="f-18 f-W500 T-c-0 mb-0">{{process.title}}</p>
+               {{process.content|safe}}
+              </div>
+              <div class="Hit-im text-center">
+                <p><img src="{% static 'front_design/images/Hw-t-w.png' %}" class="img-fluid"></p>
+                <div class="Hw-1 Hw-stP " data-aos="fade-down" data-aos-duration="1000">
+                  <div class="d-flex align-items-center">
+                   {{purchase.content|safe}}
+                  </div>
+                </div>
+                <div class="Hw-2 Hw-stP" data-aos="fade-up" data-aos-duration="2500">
+                  <div class="d-flex align-items-center">
+                   {{bidding.content|safe}}
+                  </div>
+                </div>
+                <div class="Hw-3 Hw-stP" data-aos="fade-up" data-aos-duration="3000">
+                  <div class="d-flex align-items-center">
+                    {{winning.content|safe}}
+                  </div>
+                </div>
+              </div>
+              {{platform.content|safe}}
+            </div>
+          </div>
+        </div>
+
+</div>
+{% block Footer %}
+            {% include  "default_theme/hbdtheme/__footer.html" %}
+            {% endblock Footer %} 
+
+
+
+{% endblock Content_Area %}
+
+
+{% block Java_Scripts %}
+
+{% endblock %}

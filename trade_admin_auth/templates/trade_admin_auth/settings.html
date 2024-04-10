@@ -1,0 +1,257 @@
+{% extends 'default_theme/base/__base.html' %}
+{% load staticfiles %} 
+
+{% load form_custom %}
+
+
+{% block Style_sheets %}
+
+{% endblock Style_sheets %}
+{% load widget_tweaks %}
+
+ {% block Content_Area %}
+ 
+    <section class="content">
+     
+     
+     <div class="box box-default">
+        <div class="box-header with-border">
+          <h3 class="box-title">{{ Title}}</h3>
+
+          <div class="box-tools pull-right">
+            {% comment %}
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+            {% endcomment %}
+          </div>
+        </div>
+        {% if messages %}
+     {% for message in messages %}
+     <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+       
+         <form role="form" action="" method='post' enctype="multipart/form-data" novalidate ="novalidate">
+             {% csrf_token %} 
+             {{ form.media }}
+       
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-6">
+              
+             
+               <div class="form-group">
+                  <label >{{form.form1.name.label}}
+                    {% if form.form1.name|req_label  %} <span class="text-danger"> * </span>{% endif %}
+                  </label>
+                    {%render_field form.form1.name class+="form-control" placeholder=form.form1.name.label %}
+                    {% if form.form1.name.errors %}
+                    {% for error in form.form1.name.errors %}
+                     <span class="text-danger">* {{ error|escape }} </span>
+                    {% endfor %}
+                  {% endif %}
+                   
+                </div>
+                
+                <div class="form-group">
+                 <label >{{form.form1.email.label}}
+                    {% if form.form1.email|req_label  %} <span class="text-danger"> * </span>{% endif %}
+                  </label>
+                    {%render_field form.form1.email class+="form-control" placeholder=form.form1.email.label %}
+                </div>
+                <div class="form-group">
+                  <label >{{form.form1.Gst_number.label}}
+                     {% if form.form1.Gst_number|req_label  %} <span class="text-danger"> * </span>{% endif %}
+                   </label>
+                     {%render_field form.form1.Gst_number class+="form-control" placeholder=form.form1.Gst_number.label %}
+                 </div>
+                 <div class="form-group">
+                  <label >{{form.form1.pan_number.label}}
+                     {% if form.form1.pan_number|req_label  %} <span class="text-danger"> * </span>{% endif %}
+                   </label>
+                     {%render_field form.form1.pan_number class+="form-control" placeholder=form.form1.pan_number.label %}
+                 </div>
+                
+
+                <div class="form-group">
+                 <label >{{form.form1.phone1.label}}
+                    {% if form.form1.phone1|req_label  %} <span class="text-danger"> * </span>{% endif %}
+                  </label>
+                    {%render_field form.form1.phone1 class+="form-control" placeholder=form.form1.phone1.label %}
+                </div>
+                <div class="form-group">
+                  <label >{{form.form1.address1.label}}
+                     {% if form.form1.address1|req_label  %} <span class="text-danger"> * </span>{% endif %}
+                   </label>
+                     {%render_field form.form1.address1 class+="form-control" placeholder=form.form1.address1.label %}
+                 </div>
+                 <div class="form-group">
+                  <label >{{form.form1.city.label}}
+                     {% if form.form1.city|req_label  %} <span class="text-danger"> * </span>{% endif %}
+                   </label>
+                     {%render_field form.form1.city class+="form-control" placeholder=form.form1.city.label %}
+                 </div>
+              
+               <div class="form-group">
+                 <label >{{form.form1.copy_right.label}}
+                    {% if form.form1.copy_right|req_label  %} <span class="text-danger"> * </span>{% endif %}
+                  </label>
+                    {%render_field form.form1.copy_right class+="form-control" placeholder=form.form1.copy_right.label %}
+                </div>
+            </div>
+          
+            <div class="col-md-6">
+             
+              <div class="form-group">
+                <label for="exampleInputFile">Site Logo<span class="text-danger"> * </span>
+                </label>
+                Currently: <a href="{% if comp_company_logo.url != '' %}{{comp_company_logo.url}} {% endif%}" target="_blank">{{comp_company_logo}}</a>
+                <br>
+                Change:
+                <input type="file" name="form1-company_logo" id="id_form1-company_logo" accept="image/*">
+                <br>
+                  <img src="{% if comp_company_logo.url != '' %}{{comp_company_logo.url}} {% endif%}" alt="Company Logo Image" width='100' height='100'>
+              </div>
+               
+              <div class="form-group">
+                  <label for="exampleInputFile">Site Favicon <span class="text-danger"> * </span>
+                  </label>
+                   Currently: <a href="{% if company_fav.url != '' %}{{company_fav.url}} {% endif %}" target="_blank">{{company_fav}}</a>
+                    <br>
+                    Change:
+                    <input type="file" name="form1-company_fav" id="id_form1-company_fav" accept="image/*">
+                    <br>
+                   <img src="{% if company_fav.url != '' %} {{company_fav.url}} {% endif %}" alt="Fav Image" width='100' height='100'>
+              </div>
+             
+               {% comment %}
+              <div class="form-group">
+                 <label >{{form.form1.admin_redirect.label}}
+                    {% if form.form1.admin_redirect|req_label  %} <span class="text-danger"> * </span>{% endif %}
+                  </label>
+                    {%render_field form.form1.admin_redirect class+="form-control" placeholder=form.form1.admin_redirect.label %}
+              </div>
+               {% endcomment %}
+           
+            </div>
+          </div>
+           
+         
+          <div class="row">
+            <div class="box-header with-border">
+            <h4 class="box-title">Social Link</h4>
+            </div>
+           <div class="col-md-6">
+            <div class="form-group">
+                  <label >{{form.form1.fb.label}}
+                    {% if form.form1.fb|req_label  %} <span class="text-danger"> * </span>{% endif %}
+                  </label>
+                    {%render_field form.form1.fb class+="form-control" placeholder=form.form1.fb.label %}
+            </div>
+            <div class="form-group">
+                  <label >{{form.form1.twitter.label}}
+                    {% if form.form1.twitter|req_label  %} <span class="text-danger"> * </span>{% endif %}
+                  </label>
+                    {%render_field form.form1.twitter class+="form-control" placeholder=form.form1.twitter.label %}
+            </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                  <label >telegram
+                    {% if form.form1.telegram|req_label  %} <span class="text-danger"> * </span>{% endif %}
+                  </label>
+                    {%render_field form.form1.telegram class+="form-control" placeholder="telegram" %}
+              </div>
+              <div class="form-group">
+                  <label >{{form.form1.instagram.label}}
+                    {% if form.form1.instagram|req_label  %} <span class="text-danger"> * </span>{% endif %}
+                  </label>
+                    {%render_field form.form1.instagram class+="form-control" placeholder=form.form1.instagram.label %}
+             </div>
+              <div class="form-group">
+                  <label >linkedin
+                    {% if form.form1.linkedin|req_label  %} <span class="text-danger"> * </span>{% endif %}
+                  </label>
+                    {%render_field form.form1.linkedin class+="form-control" placeholder="linkedin" %}
+             </div>
+            </div>
+          </div> 
+          <div class="row">
+            <div class="box-header with-border">
+            <h4 class="box-title">Site Maintain Info</h4>
+            </div>
+           <div class="col-md-6">
+            <div class="form-group">
+                  <label >{{form.form2.site_maintenance_status.label}}
+                    {% if form.form2.site_maintenance_status|req_label  %} <span class="text-danger"> * </span>{% endif %}
+                  </label>
+                    {%render_field form.form2.site_maintenance_status class+="form-control" placeholder=form.form2.site_maintenance_status.label %}
+            </div>
+            
+            <div class="form-group">
+                  <label >{{form.form2.adminipaddress.label}}
+                    {% if form.form2.adminipaddress|req_label  %} <span class="text-danger"> * </span>{% endif %}
+                  </label>
+                    {%render_field form.form2.adminipaddress class+="form-control" placeholder=form.form2.adminipaddress.label %}
+            </div>
+            <div id="demo" style="color: red"></div>
+            </div>
+
+            <div class="col-md-6">
+               {% comment %}
+              <div class="form-group">
+                  <label >{{form.form2.site_maintenance.label}}
+                    {% if form.form2.site_maintenance|req_label  %} <span class="text-danger"> * </span>{% endif %}
+                  </label>
+                    {%render_field form.form2.site_maintenance class+="form-control" placeholder=form.form2.site_maintenance.label %}
+             </div>
+              {% endcomment %}
+            </div>
+          </div> 
+         <div class="box-footer">
+                <button type="submit" class="btn btn-primary" id="sub_btn">Submit</button>
+         </div>
+          </form>
+      </div>
+
+    </section>
+    
+
+<script type="text/javascript">
+  $("#id_form2-adminipaddress").keyup(function(){
+
+  var ipaddress =/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/;
+  var content = $("#id_form2-adminipaddress").val();
+  if (ipaddress.test(content)) {
+    $("#demo").hide()
+    $("#sub_btn").prop('disabled', false)
+  }
+  else if (content == '') {
+    $("#demo").hide()
+    $("#sub_btn").prop('disabled', false)
+
+  }
+   else {
+    $("#demo").html("Ipaddress is invalid");
+    $("#sub_btn").prop('disabled', true)
+  }
+
+
+});
+</script>
+
+
+
+ {% endblock Content_Area %}
+
+ {% block Java_Scripts %}
+
+
+ {% endblock %}
+
+

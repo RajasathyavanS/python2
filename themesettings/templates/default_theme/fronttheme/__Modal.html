@@ -1,0 +1,197 @@
+{% load staticfiles %}
+
+
+<!-- Login -->
+<div class="modal fade login-popup" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><img src="{% static 'front_design/img/popup-logo.png'%}" class="img-fluid"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body popup-body">
+           <h2>WELCOME BACK!</h2>
+
+           <form class="login-form mt-4">
+  <div class="form-group">
+    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Email">
+  </div>
+  <div class="form-group">
+    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Password">
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+        <div class="form-check text-center mt-1">
+  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+  <label class="form-check-label" for="defaultCheck1">
+    Remember Me
+  </label>
+</div>
+    </div> 
+    <div class="col-md-6">
+      <div class="text-right login-botm">
+   <p><a href="" data-toggle="modal" data-target="#exampleModal3">Lost your password?</a></p>
+ </div> 
+    </div> 
+  </div> 
+
+<div class="form-group text-center mt-3">
+<a href="" class="btn btn-outline1 btn-xl hvr-float-shadow">Login Now</a>
+</div>
+ <div class="text-center login-botm">
+   <p><a href="">Register Now</a></p>
+ </div> 
+  <div class="text-center login-botm">
+   <p>- or -</p>
+ </div>
+ <div class="row justify-content-center">
+    <div class="col-md-9">
+      <div class="">
+            <a href="#" class="social-button" id="facebook-connect"> <span>Connect with Facebook</span></a>
+      </div>   
+    </div>  
+ </div> 
+  <div class="row justify-content-center">
+    <div class="col-md-9">
+      <div class="">
+            <a href="#" class="social-button-2" id="instagram-connect"> <span>Connect with Instagram</span></a>
+      </div>   
+    </div>  
+ </div> 
+</form>
+      </div>
+ 
+    </div>
+  </div>
+</div>
+<!-- Register -->
+<div class="modal fade register" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><img src="{% static 'front_design/img/popup-logo.png'%} " class="img-fluid"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body popup-body">
+           <h2>JOIN TODAY</h2>
+
+           <form class="register-form mt-4">
+            <div class="row">
+                 <div class="form-group col-lg-6">
+    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="First Name">
+  </div>
+  <div class="form-group col-lg-6">
+    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder=" Last Name">
+  </div>
+            </div>
+             <div class="row">
+                 <div class="form-group col-lg-6">
+    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Email Address">
+  </div>
+  <div class="form-group col-lg-6">
+    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Password">
+  </div>
+            </div>
+             <div class="row">
+                 <div class="form-group col-lg-6">
+    <input type="text" class="form-control" id="formGroupExampleInput" placeholder=" Retype your new password">
+  </div>
+  <div class="form-check text-center mt-4">
+  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+  <label class="form-check-label" for="defaultCheck1">
+    I Agree with the terms and conditions
+  </label>
+</div>
+            </div>
+
+<div class="form-group text-center mt-4">
+<a href="" class="btn btn-outline1 btn-xl hvr-float-shadow">Register Now</a>
+</div>
+<div class="text-center login-botm">
+   <p><a href="">Login Now</a></p>
+ </div> 
+   <div class="text-center login-botm">
+   <p>- or -</p>
+ </div>
+ <div class="row justify-content-center">
+    <div class="col-md-5">
+      <div class="">
+            <a href="#" class="social-button" id="facebook-connect"> <span>Connect with Facebook</span></a>
+      </div>   
+    </div>  
+     <div class="col-md-5">
+      <div class="">
+            <a href="#" class="social-button-2" id="instagram-connect"> <span>Connect with Instagram</span></a>
+      </div>   
+    </div>
+ </div>  
+</form>
+      </div>
+ 
+    </div>
+  </div>
+</div>
+<!-- forgot -->
+
+<div class="modal fade forgot-password" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><img src="{% static 'front_design/img/popup-logo.png'%}" class="img-fluid"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body popup-body">
+           <h2>Forgot Password</h2>
+
+           <form class="login-form mt-4">
+  <div class="form-group">
+    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Email">
+  </div>
+
+<div class="form-group text-center mt-4">
+<a href="" class="btn btn-outline1 btn-xl hvr-float-shadow">Submit</a>
+</div>
+ 
+</form>
+      </div>
+ 
+    </div>
+  </div>
+</div>
+<!-- Reset -->
+
+<div class="modal fade forgot-password" id="exampleModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><img src="{% static 'front_design/img/popup-logo.png'%}" class="img-fluid"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body popup-body">
+           <h2>Reset Password</h2>
+
+           <form class="login-form mt-4">
+  <div class="form-group">
+    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Password">
+  </div>
+  <div class="form-group">
+    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Confirm Password">
+  </div>
+<div class="form-group text-center mt-4">
+<a href="" class="btn btn-outline1 btn-xl hvr-float-shadow">Reset</a>
+</div>
+ 
+</form>
+      </div>
+ 
+    </div>
+  </div>
+</div>

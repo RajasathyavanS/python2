@@ -1,0 +1,40 @@
+{% extends 'default_theme/hbdtheme/__landingbase.html' %}
+{% load staticfiles %} 
+{% block Style_sheets %}
+
+{% endblock Style_sheets %}
+{% load widget_tweaks %}
+{% load form_custom %}
+
+{% block Content_Area %}
+
+<div class="middle-section">
+            <div class="Terms-&-Condition pt-md-5 pb-md-5 cms-section">
+                <div class="container">
+                   <div class="banner-box" id="aboutus">
+                    <div class="coin-details">
+                      <div class="container">
+                        <div class="d-flex justify-content-center">
+                          <div class="Bnn-Th text-center">
+                           {{bannerheading.content|safe}}
+                            <p class="mb-0 Bnn-im animate__animated animate__zoomInDown "><img src="{% static 'front_design/images/Bnn-img.png' %}" class="img-fluid"></p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                </div>
+
+            </div>
+            
+            {% block Footer %}
+            {% include  "default_theme/hbdtheme/__footer.html" %}
+            {% endblock Footer %}
+</div>
+
+{% endblock Content_Area %}
+
+
+{% block Java_Scripts %}
+
+{% endblock %}

@@ -1,0 +1,74 @@
+{% load staticfiles %}
+
+<div class="padding-block" id="contact">
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12 col-md-12 col-xl-12 text-center mb-5" data-aos="flip-left">
+                                <h1 class="text-white text-center secondary-font title-section title-section1 font-weight-bold font-36 
+                                text-uppercase">CONTACT US</h1>
+                                <p class="subtitle fancy text-center"><span></span></p>
+                            </div>
+                        </div>
+
+
+                        <div class="d-lg-flex  justify-content-between">
+                            <p class="text-white font-16 primary-font fontweight-400"><img src="{% static 'front_design/images/location.png' %}" class="pr-2">{{comp_address}}</p>
+                            <p class="text-white font-16 primary-font fontweight-400"><img src="{% static 'front_design/images/call.png' %}" class="pr-2">+91 {{comp_phonenumber}}</p>
+                            <p class="text-white font-16 primary-font fontweight-400"><img src="{% static 'front_design/images/email.png' %}" class="pr-2"></i>{{comp_email}}</p>
+                        </div>
+
+                        <form method="post">
+                                {% csrf_token %}
+                        <div class="row justify-content-center mt-5 contact-block">
+                            
+                            <div class="col-md-6 col-sm-12 col-lg-4 col-xl-4">
+                                <div class="form-group input-form">
+                                    <input type="text" oninput="validate(this)" class="form-control text-white input-text font-14" placeholder="Full Name" name="name" id="id_name" required="">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-lg-4 col-xl-4">
+                                <div class="form-group input-form">
+                                    <input type="email"  class="form-control text-white input-text font-14" placeholder="Email Address" name="email" id="id_email" required="" />
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-lg-8 col-xl-8 mt-2">
+                                <div class="form-group input-form">
+                                    <input type="text" oninput="validate(this)" class="form-control text-white input-text font-14" placeholder="Subject" name="subject" id="id_subject" required="" />
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-lg-8 col-xl-8 mt-2">
+                                <div class="form-group input-form">
+                                    <textarea type="text" rows="4" oninput="validate(this)" class="form-control text-white input-text font-14" placeholder="Message" name="message" id="id_message" required=""></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12 text-center mt-4">
+                                <button class="btn bg-primary1 primary-font border-radius text-white px-5 fontweight-500 mb-3 mr-2" type="submit">Submit </button>
+                            </div>
+                     
+                        </div>
+                           </form>
+
+                    </div>
+
+ <script type="text/javascript">
+      function check()
+{
+    var mobile = document.getElementById('id_phone1');
+    
+    var message = document.getElementById('message');
+
+   var goodColor = "#0C6";
+    var badColor = "white";
+  
+    if(mobile.value.length!=10){
+       
+        // mobile.style.backgroundColor = goodColor;
+        message.style.color = badColor;
+        message.innerHTML = "required 10 digits, match requested format!"
+        $("#btn").prop('disabled', true)
+    }
+    else{
+      $("#btn").prop('disabled', false)
+      $("#message").hide();
+    }
+  }
+    </script>

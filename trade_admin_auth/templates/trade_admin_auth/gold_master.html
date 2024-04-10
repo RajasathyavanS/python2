@@ -1,0 +1,244 @@
+{% extends 'default_theme/base/__base.html' %}
+{% load staticfiles %} 
+
+{% load form_custom %}
+
+
+{% block Style_sheets %}
+{{ subadmin_formset.media.css }}
+{% endblock Style_sheets %}
+{% load widget_tweaks %}
+
+ {% block Content_Area %}
+   
+ <style>
+  body {font-family: Arial, Helvetica, sans-serif;}
+  
+  /* The Modal (background) */
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  /* Modal Content */
+  .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 30%;
+  }
+  
+  /* The Close Button */
+  .close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  </style>
+    <section class="content">
+      <input type="hidden" id="user_id" value="{{obj_user.Email}}">
+
+     
+     <div class="box box-default">
+        <div class="box-header with-border">
+          <h3 class="box-title">{{ Title}}</h3>
+          <div class="box-tools pull-right">
+            {% comment %}
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+            {% endcomment %}
+          </div>
+        </div>
+        {% if messages %}
+     {% for message in messages %}
+     <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+         
+         <form role="form" action="/tradeadmin/gold_mast/" method='post' enctype="multipart/form-data" novalidate ="novalidate">
+             {% csrf_token %} 
+             {{ form.media }}
+       
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-6">
+                  <div class="form-group">
+                    <label >Metal Name   
+                      <span class="text-danger"> * </span>
+                    </label>
+                    <input type="text" id="" name="name" class="form-control"   placeholder="Metal Name">
+                     
+                  </div>
+
+                  <div class="form-group">
+                    <label >Rate  
+                      <span class="text-danger"> * </span>
+                    </label>
+                    <input type="text" id="" name="amount" class="form-control"   placeholder="Rate">
+                     
+                  </div>
+                  
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label > Date
+                         <span class="text-danger"> * </span>
+                        </label>
+                        <input type="text" name="plan_end_date" class="form-control" id="id_plan_end_date" value="" placeholder="DATE" required>                 
+                      </div>
+                    </div>
+                  </div>
+
+
+                 
+
+                </div>
+              </div>
+              </div>
+              <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+               &nbsp;&nbsp; &nbsp;&nbsp;
+               <a href="tradeadmin/dashboard/" class="btn btn-primary" >Back</a>
+        </div>
+              </form>
+           
+            <div class="col-md-6">
+             
+           
+            </div>
+            <div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Gold History</h3>
+                  <div class="box-tools pull-right">                         
+                            </div>
+                </div>
+    
+                 <div class="table-responsive">
+              
+                <div class="box-body">
+                  <table id="examples" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                      <th  class="no-sort">S.No</th>
+                      <th  class="no-sort">Metal Name</th>
+                      <th  class="no-sort">Metal Amount</th>
+                      <th  class="no-sort">Date&time</th>
+                        </tr>
+                    </thead>
+                </table>
+                  
+                </div>
+                </div>
+              
+              </div>
+          </div>
+        
+    </section>
+   
+    <script src="https://cdn.tutorialjinni.com/jquery-csv/1.0.11/jquery.csv.min.js"></script>
+    
+
+
+
+    <script>
+
+        $(document).ready(function() {
+            
+          var table =  $('#examples').DataTable({
+            bFilter: false,
+            ajax: {
+            url: '/tradeadmin/getschemegold/',
+            type: 'POST',
+            data: function ( d )
+                  {
+                  },
+            },
+            columns: [
+              { data: null },
+              { data: 'Metal_name'},
+              { data: 'Metal_amount'},
+              { data: 'Metal_id'},    
+          ],
+            processing: true,
+            serverSide: true,
+            drawCallback: function (settings) { 
+                var response = settings.json;
+                $('.sorting_1').each(function(i){
+                  $(this).html(response.tt[i])
+                })
+            }, 
+          });    
+          $("#Bill_Search_Form").on("submit", function (event) {
+        
+            event.preventDefault();
+        
+            $('table#examples').dataTable().fnDraw();
+            
+          })
+          
+         });
+         
+         </script>
+
+
+
+ {% endblock Content_Area %}
+
+ {% block Java_Scripts %}
+
+ <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.js"></script>
+
+
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js" integrity="sha512-GDey37RZAxFkpFeJorEUwNoIbkTwsyC736KNSYucu1WJWFK9qTdzYub8ATxktr6Dwke7nbFaioypzbDOQykoRg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css" integrity="sha512-63+XcK3ZAZFBhAVZ4irKWe9eorFG0qYsy2CaM5Z+F3kUn76ukznN0cp4SArgItSbDFD1RrrWgVMBY9C/2ZoURA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" integrity="sha512-aEe/ZxePawj0+G2R+AaIxgrQuKT68I28qh+wgLrcAJOz3rxCP+TwrK5SPN+E5I+1IQjNtcfvb96HDagwrKRdBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+ <link href='bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css' rel='stylesheet' type='text/css'>
+<script src='bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js' type='text/javascript'></script>
+
+
+
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/1.4.0/js/bootstrap-datetimepicker.min.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+
+
+<script>
+$(function datetime() {
+   
+  $('#id_plan_end_date').datetimepicker({
+  format: 'YYYY-MM-DD HH:mm',
+  minDate: moment(),
+  }); 
+})
+</script>
+
+ {% endblock %}
+
+

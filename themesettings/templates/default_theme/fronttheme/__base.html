@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <title>{{comp_profile_name}} - {{Title}}</title>
+      {% load static %}
+      <link href="{% static 'front_design/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap&time=1" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800&display=swap" rel="stylesheet">
+     
+      <link href="{% static 'front_design/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+      <link rel="stylesheet" href="{% static 'front_design/vendor/simple-line-icons/css/simple-line-icons.css' %}">
+      <link href="https://www.jqueryscript.net/css/jquerysctipttop.css' %}" rel="stylesheet" type="text/css">
+      <link href="{% static 'front_design/css/jquery.roadmap.min.css' %}" rel="stylesheet" type="text/css" />
+      <!-- Custom styles for this template -->
+      <link href="{% static 'front_design/css/new-age.min.css' %}" rel="stylesheet">
+       <link href="{% static 'front_design/css/hover-min.css' %}" rel="stylesheet">
+      <link href="{% static 'front_design/css/animate.css' %}" rel="stylesheet">
+
+      <link href="{% static 'front_design/css/timeline.min.css' %}" rel="stylesheet">
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+       <script src="https://d3js.org/d3.v3.min.js"></script>
+
+  <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    
+   </head>
+   <body id="page-top">
+      <!-- Navigation -->
+     {% block Header %}
+            {% include  "default_theme/fronttheme/__header.html" %}
+      {% endblock Header %}
+      {% block Banner %}
+            {% include  "default_theme/fronttheme/__banner.html" %}
+      {% endblock Banner %}
+
+      {% block Token %}
+            {% include  "default_theme/fronttheme/__token.html" %}
+      {% endblock Token %}
+       {% block Team %}
+            {% include  "default_theme/fronttheme/__team.html" %}
+      {% endblock Team %}
+    {% block Footer %}
+            {% include  "default_theme/fronttheme/__footer.html" %}
+    {% endblock Footer %}
+   
+
+      <!-- Bootstrap core JavaScript -->
+
+{% include  "default_theme/fronttheme/__Modal.html" %}
+      <script src="{% static 'front_design/vendor/jquery/jquery.min.js' %}"></script>
+      <script src="{% static 'front_design/vendor/js/timeline.js' %}"></script>
+      <script src="{% static 'front_design/vendor/js/timeline.min.js' %}"></script>
+       
+      <script src="{% static 'front_design/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+      <!-- Plugin JavaScript -->
+      <script src="{% static 'front_design/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+      <!-- Custom scripts for this template -->
+      <script src="{% static 'front_design/js/new-age.min.js' %}"></script>
+      
+<script type="text/javascript">
+             var div = d3.select("body").append("div").attr("class", "toolTip");
+
+var w = 450;
+var h = 350;
+var r = 150;
+var ir = 95;
+var textOffset = 24;
+var tweenDuration = 1050;
+
+//OBJECTS TO BE POPULATED WITH DATA LATER
+var lines, valueLabels, nameLabels;
+var pieData = [];    
+var oldPieData = [];
+var filteredPieData = [];
+
+//D3 helper function to populate pie slice parameters from array data
+var donut = d3.layout.pie().value(function(d){
+  return d.itemValue;
+});
+
+//D3 helper function to create colors from an ordinal scale
+var color = d3.scale.category10();
+
+//D3 helper function to draw arcs, populates parameter "d" in path object
+var arc = d3.svg.arc()
+  .startAngle(function(d){ return d.startAngle; })
+  .endAngle(function(d){ return d.endAngle; })
+  .innerRadius(ir)
+  .outerRadius(r);
+
+///////////////////////////////////////////////////////////
+// GENERATE FAKE DATA /////////////////////////////////////
+///////////////////////////////////////////////////////////
+
+var data = [
+ {
+    "itemValue":35,
+    "itemLabel":"DJIA"
+ },
+ {
+    "itemValue":65,
+    "itemLabel":"Real Estate"
+ }
+];
+
+///////////////////////////////////////////////////////////
+// CREATE VIS & GROUPS ////////////////////////////////////
+///////////////////////////////////////////////////////////
+
+var vis = d3.select("#pie-chart").append("svg:svg")
+  .attr("width", w)
+  .attr("height", h);
+
+//GROUP FOR ARCS/PATHS
+var arc_group = vis.append("svg:g")
+  .attr("class", "arc")
+  .attr("transform", "translate(" + (w/2) + "," + (h/2) + ")");
+
+//GROUP FOR LABELS
+var label_group = vis.append("svg:g")
+  .attr("class", "label_group")
+  .attr("transform", "translate(" + (w/2) + "," + (h/2) + ")");
+
+//GROUP FOR CENTER TEXT  
+var center_group = vis.append("svg:g")
+  .attr("class", "center_group")
+  .attr("transform", "translate(" + (w/2) + "," + (h/2) + ")");
+
+//PLACEHOLDER GRAY CIRCLE
+// var paths = arc_group.append("svg:circle")
+//     .attr("fill", "#EFEFEF")
+//     .attr("r", r);
+
+///////////////////////////////////////////////////////////
+// CENTER TEXT ////////////////////////////////////////////
+///////////////////////////////////////////////////////////
+
+//WHITE CIRCLE BEHIND LABELS
+var whiteCircle = center_group.append("svg:circle")
+  .attr("fill", "white")
+  .attr("r", ir);
+
+///////////////////////////////////////////////////////////
+// STREAKER CONNECTION ////////////////////////////////////
+///////////////////////////////////////////////////////////
+
+// to run each time data is generated
+function update(data) {
+
+  oldPieData = filteredPieData;
+  pieData = donut(data);
+
+  var sliceProportion = 0; //size of this slice
+  filteredPieData = pieData.filter(filterData);
+  function filterData(element, index, array) {
+    element.name = data[index].itemLabel;
+    element.value = data[index].itemValue;
+    sliceProportion += element.value;
+    return (element.value > 0);
+  }
+
+    //DRAW ARC PATHS
+    paths = arc_group.selectAll("path").data(filteredPieData);
+    paths.enter().append("svg:path")
+      .attr("stroke", "white")
+      .attr("stroke-width", 0.5)
+      .attr("fill", function(d, i) { return color(i); })
+      .transition()
+        .duration(tweenDuration)
+        .attrTween("d", pieTween);
+    paths
+      .transition()
+        .duration(tweenDuration)
+        .attrTween("d", pieTween);
+    paths.exit()
+      .transition()
+        .duration(tweenDuration)
+        .attrTween("d", removePieTween)
+      .remove();
+
+  paths.on("mousemove", function(d){
+    div.style("left", d3.event.pageX+10+"px");
+    div.style("top", d3.event.pageY-25+"px");
+    div.style("display", "inline-block");
+    div.html((d.data.itemLabel)+"<br>"+(d.data.itemValue));
+  });
+
+paths.on("mouseout", function(d){
+    div.style("display", "none");
+});
+
+
+    //DRAW TICK MARK LINES FOR LABELS
+    lines = label_group.selectAll("line").data(filteredPieData);
+    lines.enter().append("svg:line")
+      .attr("x1", 0)
+      .attr("x2", 0)
+      .attr("y1", -r-3)
+      .attr("y2", -r-15)
+      .attr("stroke", "gray")
+      .attr("transform", function(d) {
+        return "rotate(" + (d.startAngle+d.endAngle)/2 * (180/Math.PI) + ")";
+      });
+    lines.transition()
+      .duration(tweenDuration)
+      .attr("transform", function(d) {
+        return "rotate(" + (d.startAngle+d.endAngle)/2 * (180/Math.PI) + ")";
+      });
+    lines.exit().remove();
+
+    //DRAW LABELS WITH PERCENTAGE VALUES
+    valueLabels = label_group.selectAll("text.value").data(filteredPieData)
+      .attr("dy", function(d){
+        if ((d.startAngle+d.endAngle)/2 > Math.PI/2 && (d.startAngle+d.endAngle)/2 < Math.PI*1.5 ) {
+          return 5;
+        } else {
+          return -7;
+        }
+      })
+      .attr("text-anchor", function(d){
+        if ( (d.startAngle+d.endAngle)/2 < Math.PI ){
+          return "beginning";
+        } else {
+          return "end";
+        }
+      })
+      .text(function(d){
+        var percentage = (d.value/sliceProportion)*100;
+        return percentage.toFixed(1) + "%";
+      });
+
+    valueLabels.enter().append("svg:text")
+      .attr("class", "value")
+      .attr("transform", function(d) {
+        return "translate(" + Math.cos(((d.startAngle+d.endAngle - Math.PI)/2)) * (r+textOffset) + "," + Math.sin((d.startAngle+d.endAngle - Math.PI)/2) * (r+textOffset) + ")";
+      })
+      .attr("dy", function(d){
+        if ((d.startAngle+d.endAngle)/2 > Math.PI/2 && (d.startAngle+d.endAngle)/2 < Math.PI*1.5 ) {
+          return 5;
+        } else {
+          return -7;
+        }
+      })
+      .attr("text-anchor", function(d){
+        if ( (d.startAngle+d.endAngle)/2 < Math.PI ){
+          return "beginning";
+        } else {
+          return "end";
+        }
+      }).text(function(d){
+        var percentage = (d.value/sliceProportion)*100;
+        return percentage.toFixed(1) + "%";
+      });
+
+    valueLabels.transition().duration(tweenDuration).attrTween("transform", textTween);
+
+    valueLabels.exit().remove();
+
+
+    //DRAW LABELS WITH ENTITY NAMES
+    nameLabels = label_group.selectAll("text.units").data(filteredPieData)
+      .attr("dy", function(d){
+        if ((d.startAngle+d.endAngle)/2 > Math.PI/2 && (d.startAngle+d.endAngle)/2 < Math.PI*1.5 ) {
+          return 17;
+        } else {
+          return 5;
+        }
+      })
+      .attr("text-anchor", function(d){
+        if ((d.startAngle+d.endAngle)/2 < Math.PI ) {
+          return "beginning";
+        } else {
+          return "end";
+        }
+      }).text(function(d){
+        return d.name;
+      });
+
+    nameLabels.enter().append("svg:text")
+      .attr("class", "units")
+      .attr("transform", function(d) {
+        return "translate(" + Math.cos(((d.startAngle+d.endAngle - Math.PI)/2)) * (r+textOffset) + "," + Math.sin((d.startAngle+d.endAngle - Math.PI)/2) * (r+textOffset) + ")";
+      })
+      .attr("dy", function(d){
+        if ((d.startAngle+d.endAngle)/2 > Math.PI/2 && (d.startAngle+d.endAngle)/2 < Math.PI*1.5 ) {
+          return 17;
+        } else {
+          return 5;
+        }
+      })
+      .attr("text-anchor", function(d){
+        if ((d.startAngle+d.endAngle)/2 < Math.PI ) {
+          return "beginning";
+        } else {
+          return "end";
+        }
+      }).text(function(d){
+        return d.name;
+      });
+
+    nameLabels.transition().duration(tweenDuration).attrTween("transform", textTween);
+
+    nameLabels.exit().remove();
+    
+}
+
+///////////////////////////////////////////////////////////
+// FUNCTIONS //////////////////////////////////////////////
+///////////////////////////////////////////////////////////
+
+// Interpolate the arcs in data space.
+function pieTween(d, i) {
+  var s0;
+  var e0;
+  if(oldPieData[i]){
+    s0 = oldPieData[i].startAngle;
+    e0 = oldPieData[i].endAngle;
+  } else if (!(oldPieData[i]) && oldPieData[i-1]) {
+    s0 = oldPieData[i-1].endAngle;
+    e0 = oldPieData[i-1].endAngle;
+  } else if(!(oldPieData[i-1]) && oldPieData.length > 0){
+    s0 = oldPieData[oldPieData.length-1].endAngle;
+    e0 = oldPieData[oldPieData.length-1].endAngle;
+  } else {
+    s0 = 0;
+    e0 = 0;
+  }
+  var i = d3.interpolate({startAngle: s0, endAngle: e0}, {startAngle: d.startAngle, endAngle: d.endAngle});
+  return function(t) {
+    var b = i(t);
+    return arc(b);
+  };
+}
+
+function removePieTween(d, i) {
+  s0 = 2 * Math.PI;
+  e0 = 2 * Math.PI;
+  var i = d3.interpolate({startAngle: d.startAngle, endAngle: d.endAngle}, {startAngle: s0, endAngle: e0});
+  return function(t) {
+    var b = i(t);
+    return arc(b);
+  };
+}
+
+function textTween(d, i) {
+  var a;
+  if(oldPieData[i]){
+    a = (oldPieData[i].startAngle + oldPieData[i].endAngle - Math.PI)/2;
+  } else if (!(oldPieData[i]) && oldPieData[i-1]) {
+    a = (oldPieData[i-1].startAngle + oldPieData[i-1].endAngle - Math.PI)/2;
+  } else if(!(oldPieData[i-1]) && oldPieData.length > 0) {
+    a = (oldPieData[oldPieData.length-1].startAngle + oldPieData[oldPieData.length-1].endAngle - Math.PI)/2;
+  } else {
+    a = 0;
+  }
+  var b = (d.startAngle + d.endAngle - Math.PI)/2;
+
+  var fn = d3.interpolateNumber(a, b);
+  return function(t) {
+    var val = fn(t);
+    return "translate(" + Math.cos(val) * (r+textOffset) + "," + Math.sin(val) * (r+textOffset) + ")";
+  };
+}
+
+update(data);
+          </script>
+      <script type="text/javascript">
+         function getTimeRemaining(endtime) {
+         var t = Date.parse(endtime) - Date.parse(new Date());
+         if (t<0) { return false; }
+         var seconds = Math.floor((t / 1000) % 60);
+         var minutes = Math.floor((t / 1000 / 60) % 60);
+         var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+         var days = Math.floor(t / (1000 * 60 * 60 * 24));
+         return {
+          'total': t,
+          'days': days,
+          'hours': hours,
+          'minutes': minutes,
+          'seconds': seconds
+         };
+         }
+         function initializeClock(id, endtime) {
+         var clock = document.getElementById(id);
+         var daysSpan = clock.querySelector('.days');
+         var hoursSpan = clock.querySelector('.hours');
+         var minutesSpan = clock.querySelector('.minutes');
+         var secondsSpan = clock.querySelector('.seconds');
+         function updateClock() {
+          var t = getTimeRemaining(endtime);
+          if (t) {
+            daysSpan.innerHTML = t.days;
+            hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
+            minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+            secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+          } else {
+            clearInterval(timeinterval);
+          }
+         }
+         
+         updateClock();
+         var timeinterval = setInterval(updateClock, 1000);
+         }
+         var deadline = new Date(); //today
+         deadline.setDate(deadline.getDate() + 7);
+         initializeClock('clockdiv', deadline);
+      </script>
+    
+      <script type="text/javascript">
+         $('#blogCarousel').carousel({
+         interval: 4000
+         });
+      </script>
+      <script>
+    timeline(document.querySelectorAll('.timeline'), {
+      forceVerticalMode: 700,
+      mode: 'horizontal',
+      verticalStartPosition: 'left',
+      visibleItems: 4
+    });
+  </script>
+      <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-36251023-1']);
+  _gaq.push(['_setDomainName', 'jqueryscript.net']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+ </body>
+</html>
