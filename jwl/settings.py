@@ -106,8 +106,9 @@ WSGI_APPLICATION = 'jwl.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-LOCAL_DEV= True
+LOCAL_DEV= False
 STAGE = False
+LIVE = True
 
 if LOCAL_DEV:
     DATABASES = {
@@ -128,6 +129,17 @@ if STAGE:
             'USER': 'agnisoft_jewl',
             'PASSWORD': 'wXZFWv3.A7^K',
             'HOST': '127.0.0.1',   
+            'PORT': '3306',
+        }
+    }
+if LIVE:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql', 
+            'NAME': 'jwl_base',
+            'USER': 'root',
+            'PASSWORD': '123456',
+            'HOST': 'localhost',   
             'PORT': '3306',
         }
     }
